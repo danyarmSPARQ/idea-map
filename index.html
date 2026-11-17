@@ -1,0 +1,88 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GoldOller Idea Map</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--dk:#231A17;--bg:#F9F7F5;--lt:#F2ECEA;--or:#E75437;--t2:#51453F;--t3:#71635C;--mid:#B8B0AD}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--dk);font-family:'IBM Plex Sans',Arial,sans-serif}
+header{padding:20px 32px 0}.eye{font-size:11px;letter-spacing:.14em;color:var(--or);font-weight:600}
+h1{font-size:26px;font-weight:600;margin:6px 0 2px}h1 span{color:var(--or)}.sub{color:var(--t3);font-size:14px;margin:0}
+.wrap{display:flex;gap:16px;padding:6px 24px 10px}#g{flex:1;min-width:0}svg{width:100%;height:auto;display:block}
+aside{width:290px;background:var(--dk);color:#fff;border-radius:10px;padding:18px;font-size:13.5px;line-height:1.45;align-self:flex-start;margin-top:10px}
+aside h2{font-size:17px;margin:4px 0 6px}aside .k{color:var(--or);font-weight:600;font-size:11px;letter-spacing:.1em;margin-top:10px}aside q{display:block;color:#E9E2DE;font-style:italic;margin:6px 0}
+.legend{display:flex;gap:18px;flex-wrap:wrap;font-size:12px;color:var(--t2);padding:0 32px 18px}.legend i{display:inline-block;width:11px;height:11px;border-radius:50%;margin-right:6px;vertical-align:-1px}
+.node{cursor:pointer}text{pointer-events:none}
+@media (max-width:820px){.wrap{flex-direction:column}aside{width:100%}}
+</style></head><body>
+<header><div class="eye">GOLDOLLER · WHERE COULD AI HELP?</div>
+<h1>Nine parts of the business, <span>27 ideas.</span></h1>
+<p class="sub">Mapped from GoldOller's own website. Click a team or an idea. Your priorities decide where we start.</p></header>
+<div class="wrap"><div id="g"></div>
+<aside id="p"><div class="k">HOW TO USE THIS</div><h2>Start with your hours</h2>Where does skilled time go each month? Click that part of the business and see what an agent could take on. Ideas with an orange ring are our starting suggestions, not the answer.<div class="k">NOT ON THE MAP</div>Setting rent, deciding on applicants. Out of bounds by design.</aside></div>
+<div class="legend"><span><i style="background:#231A17"></i>Part of the business</span><span><i style="background:#fff;border:1.5px solid #71635C"></i>Idea</span><span><i style="background:#fff;border:2.5px solid #E75437"></i>Our suggested starts</span></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+<script>
+const W=1200,H=740,CX=600,CY=370;
+const A=[
+ ['inv','Investments & acquisitions','Finds opportunities in markets and product classes often passed over by more traditional institutional investors.',[
+   ['Deal screening memo','Summarize an offering, market and comps into a first-pass memo','Offering memo, market data'],
+   ['Due-diligence file','Lease audit exceptions, contract abstracts, open items, cited','Rent roll, leases, contracts',1],
+   ['Comps and market summary','Draft the market section of the due-diligence report','Market and comps data']]],
+ ['am','Asset management','Budgeting and forecasting · Performance monitoring · Stakeholder communication',[
+   ['Owner report commentary','Cited draft of every variance explanation, every month','Ledger, rent roll, work orders',1],
+   ['Budget and forecast drafts','First-draft budget narratives and reforecast notes','Ledger, prior budgets'],
+   ['Portfolio watchlist','Weekly note on properties drifting from plan, with reasons','Ledger, occupancy, delinquency']]],
+ ['cap','Capital improvements','1-5 year CapEx budget plan · Property condition assessment · Project tracking',[
+   ['Bid comparison','Item-by-item bids vs scope; gaps before award','Scopes, bids',1],
+   ['CapEx plan from inspections','Turn condition assessments into a ranked 1-5 year plan draft','Inspection reports'],
+   ['Project status and closeout','Budget vs actual and closeout packets per project','Invoices, inspections']]],
+ ['ops','Property operations','Routine site inspections and reporting · work orders · make-ready',[
+   ['Work-order summaries','Spot repeat issues and cost drivers by property','Work orders'],
+   ['Make-ready coordination','Turn schedule and vendor sequence, blockers flagged','Move-outs, inspections'],
+   ['Inspection reports','Draft site inspection reports from notes and photos','Inspection notes, photos']]],
+ ['res','Leasing & residents','Front office already runs conversational AI (leasing, collections, voice, tours)',[
+   ['Renewal prep for staff','Pull each resident\'s history into a renewal brief (no pricing)','Resident ledger, work orders'],
+   ['Resident notices','Draft required notices for a person to review and send','Templates, lease terms'],
+   ['Check on vendor AI','Sample the AI conversations they already run against a checklist','Conversation logs']]],
+ ['mkt','Marketing','Integrated digital advertising · Smart SEO · review response · call scoring',[
+   ['Review themes','What residents praise and complain about, by property','Online reviews'],
+   ['Community content','Listing and website copy drafts per community','Property facts, photos'],
+   ['Call-scoring insights','Turn scored calls into coaching notes per site','Call scores, transcripts']]],
+ ['acct','Accounting & spend','Spend management (published case study)',[
+   ['Invoice match','Invoice vs contract and PO; flag exceptions','Invoices, contracts, POs'],
+   ['Spend anomaly flags','Unusual vendor spend by property, explained','AP ledger'],
+   ['Close checklist assistant','Track month-end close items and gaps','Close checklist, ledger']]],
+ ['comp','Compliance & risk','Market-rate and affordable housing · Risk management',[
+   ['Cited rules layer','Answers on rules across 20 states and DC, quoted with section','Official texts'],
+   ['Affordable file check','Recertification file completeness before audit','Tenant files'],
+   ['AI register and policy','Inventory of AI tools: purpose, data, owner, review','Tool list']]],
+ ['ppl','People & learning','GOUniversity · GOGuru · Activated program',[
+   ['Procedures assistant','Answers from GoldOller\'s own procedures, page cited','Procedures'],
+   ['Activated playbooks','Takeover and turnaround checklists for Activated teams','Past assignments'],
+   ['Onboarding guide','New-hire guide drafted from policies and GOUniversity','Policies, training']]]];
+const nodes=[{id:'go',t:'GoldOller',k:'core',x:CX,y:CY}],links=[];
+A.forEach(([id,t,q,ideas],i)=>{const a=-Math.PI/2+i*2*Math.PI/A.length;const hx=CX+Math.cos(a)*215,hy=CY+Math.sin(a)*190;
+ nodes.push({id,t,k:'area',q,x:hx,y:hy,a});links.push({s:'go',t:id});
+ ideas.forEach(([it,d,data,star],j)=>{const b=a+(j-1)*0.25;const rr=j===1?1:0.9;const x=CX+Math.cos(b)*400*rr,y=CY+Math.sin(b)*305*rr;
+  const iid=id+j;nodes.push({id:iid,t:it,k:'idea',d,data,star,area:t,x,y,a:b});links.push({s:id,t:iid});});});
+const svg=d3.select('#g').append('svg').attr('viewBox',`0 0 ${W} ${H}`);
+const by=Object.fromEntries(nodes.map(n=>[n.id,n]));
+const lk=svg.append('g').selectAll('line').data(links).join('line').attr('stroke','#DDD5D1').attr('stroke-width',1.2);
+const g=svg.append('g').selectAll('g').data(nodes).join('g').attr('class','node');
+g.each(function(n){const s=d3.select(this);
+ if(n.k==='core'){s.append('circle').attr('r',40).attr('fill','#E75437');s.append('text').text('GoldOller').attr('text-anchor','middle').attr('dy',5).attr('fill','#fff').attr('font-weight',600).attr('font-size',14);}
+ else if(n.k==='area'){const w=n.t.length*7.3+24;s.append('rect').attr('x',-w/2).attr('y',-15).attr('width',w).attr('height',30).attr('rx',15).attr('fill','#231A17');
+   s.append('text').text(n.t).attr('text-anchor','middle').attr('dy',4.5).attr('fill','#fff').attr('font-size',12.5).attr('font-weight',600);}
+ else{const right=Math.cos(n.a)>0.02,left=Math.cos(n.a)<-0.02;s.append('circle').attr('r',n.star?9:7).attr('fill','#fff').attr('stroke',n.star?'#E75437':'#71635C').attr('stroke-width',n.star?3:1.5);
+   s.append('text').text(n.t).attr('text-anchor',right?'start':left?'end':'middle').attr('dx',right?13:left?-13:0).attr('dy',(!right&&!left)?(Math.sin(n.a)<0?-14:22):4.5).attr('font-size',12.5).attr('font-weight',n.star?600:400).attr('fill','#231A17');}});
+function pos(){lk.attr('x1',d=>by[d.s].x).attr('y1',d=>by[d.s].y).attr('x2',d=>by[d.t].x).attr('y2',d=>by[d.t].y);g.attr('transform',d=>`translate(${d.x},${d.y})`);}
+pos();
+g.call(d3.drag().on('drag',(e,d)=>{d.x=Math.max(20,Math.min(W-20,e.x));d.y=Math.max(20,Math.min(H-20,e.y));pos();}));
+const p=document.getElementById('p');
+function focus(ids){g.style('opacity',n=>ids.has(n.id)||n.k==='core'?1:.25);lk.style('opacity',d=>ids.has(d.t)?1:.2);}
+g.on('click',(e,n)=>{ if(n.k==='area'){const ids=new Set([n.id,...links.filter(l=>l.s===n.id).map(l=>l.t)]);focus(ids);
+   p.innerHTML=`<div class="k">PART OF THE BUSINESS</div><h2>${n.t}</h2><q>“${n.q}”</q><div class="k">IDEAS HERE</div>${links.filter(l=>l.s===n.id).map(l=>'• '+by[l.t].t).join('<br>')}`;}
+ else if(n.k==='idea'){const ar=links.find(l=>l.t===n.id).s;focus(new Set([n.id,ar]));
+   p.innerHTML=`<div class="k">${n.area.toUpperCase()}${n.star?' · SUGGESTED START':''}</div><h2>${n.t}</h2>${n.d}.<div class="k">DATA IT NEEDS</div>${n.data}<div class="k">HOW IT WORKS</div>The agent drafts, a named person signs, proven on past work first.`;}
+ else {g.style('opacity',1);lk.style('opacity',1);} });
+if(new URLSearchParams(location.search).has('static')){document.querySelector('aside').style.display='none';document.querySelector('header').style.display='none';}
+</script></body></html>
