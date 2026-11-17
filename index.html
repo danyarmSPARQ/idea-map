@@ -1,88 +1,122 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>GoldOller Idea Map</title>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
+<title>GoldOller Systems Map</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400&display=swap" rel="stylesheet">
 <style>
-:root{--dk:#231A17;--bg:#F9F7F5;--lt:#F2ECEA;--or:#E75437;--t2:#51453F;--t3:#71635C;--mid:#B8B0AD}
+:root{--dk:#231A17;--bg:#F9F7F5;--lt:#F2ECEA;--or:#E75437;--t2:#51453F;--t3:#71635C;--mid:#B8B0AD;--gr:#3F7D54;--rd:#C2412A}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--dk);font-family:'IBM Plex Sans',Arial,sans-serif}
-header{padding:20px 32px 0}.eye{font-size:11px;letter-spacing:.14em;color:var(--or);font-weight:600}
-h1{font-size:26px;font-weight:600;margin:6px 0 2px}h1 span{color:var(--or)}.sub{color:var(--t3);font-size:14px;margin:0}
-.wrap{display:flex;gap:16px;padding:6px 24px 10px}#g{flex:1;min-width:0}svg{width:100%;height:auto;display:block}
-aside{width:290px;background:var(--dk);color:#fff;border-radius:10px;padding:18px;font-size:13.5px;line-height:1.45;align-self:flex-start;margin-top:10px}
-aside h2{font-size:17px;margin:4px 0 6px}aside .k{color:var(--or);font-weight:600;font-size:11px;letter-spacing:.1em;margin-top:10px}aside q{display:block;color:#E9E2DE;font-style:italic;margin:6px 0}
-.legend{display:flex;gap:18px;flex-wrap:wrap;font-size:12px;color:var(--t2);padding:0 32px 18px}.legend i{display:inline-block;width:11px;height:11px;border-radius:50%;margin-right:6px;vertical-align:-1px}
-.node{cursor:pointer}text{pointer-events:none}
-@media (max-width:820px){.wrap{flex-direction:column}aside{width:100%}}
+header{padding:20px 28px 6px;display:flex;flex-wrap:wrap;align-items:flex-end;gap:16px;justify-content:space-between}
+.eye{font-size:11px;letter-spacing:.14em;color:var(--or);font-weight:600}h1{font-size:25px;font-weight:600;margin:6px 0 2px;text-wrap:balance}h1 span{color:var(--or)}
+.sub{color:var(--t3);font-size:13.5px;margin:0;max-width:640px}
+.tog{display:flex;background:var(--lt);border-radius:999px;padding:3px}.tog button{border:0;background:none;padding:7px 16px;border-radius:999px;font:600 13px 'IBM Plex Sans',Arial;color:var(--t2);cursor:pointer}
+.tog button.on{background:var(--dk);color:#fff}.tog button:focus-visible{outline:2px solid var(--or)}
+.wrap{display:flex;gap:16px;padding:4px 20px 8px}#g{flex:1;min-width:0}svg{width:100%;height:auto;display:block}
+aside{width:310px;background:var(--dk);color:#fff;border-radius:10px;padding:18px;font-size:13.5px;line-height:1.48;align-self:flex-start;margin-top:8px}
+aside h2{font-size:17px;margin:4px 0 6px}.k{color:var(--or);font-weight:600;font-size:11px;letter-spacing:.1em;margin-top:12px}
+aside .said{border-left:2px solid var(--or);padding-left:9px;color:#E9E2DE;font-style:italic;margin:6px 0}
+.pill{display:inline-block;font-size:11px;font-weight:600;padding:2px 9px;border-radius:10px;margin:2px 4px 2px 0}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--t2);padding:2px 28px 18px}.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-2px}
+.node{cursor:pointer}.node:focus-visible rect{stroke:var(--or);stroke-width:2}text{pointer-events:none}
+@media (max-width:900px){.wrap{flex-direction:column}aside{width:100%}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style></head><body>
-<header><div class="eye">GOLDOLLER · WHERE COULD AI HELP?</div>
-<h1>Nine parts of the business, <span>27 ideas.</span></h1>
-<p class="sub">Mapped from GoldOller's own website. Click a team or an idea. Your priorities decide where we start.</p></header>
+<header><div><div class="eye">GOLDOLLER · SYSTEMS, MEASURES AND FIRST MOVES</div>
+<h1>Many systems, one <span>layer.</span></h1>
+<p class="sub">What we heard on Nov 17. Click a system, a measure, a team or an opportunity. Switch between how data moves today and how it could move with one shared layer.</p></div>
+<div class="tog" role="tablist"><button id="bt" class="on" role="tab">Today</button><button id="bl" role="tab">With the layer</button></div></header>
 <div class="wrap"><div id="g"></div>
-<aside id="p"><div class="k">HOW TO USE THIS</div><h2>Start with your hours</h2>Where does skilled time go each month? Click that part of the business and see what an agent could take on. Ideas with an orange ring are our starting suggestions, not the answer.<div class="k">NOT ON THE MAP</div>Setting rent, deciding on applicants. Out of bounds by design.</aside></div>
-<div class="legend"><span><i style="background:#231A17"></i>Part of the business</span><span><i style="background:#fff;border:1.5px solid #71635C"></i>Idea</span><span><i style="background:#fff;border:2.5px solid #E75437"></i>Our suggested starts</span></div>
+<aside id="p"><div class="k">THE SHORT VERSION</div><h2>The data exists. It doesn't agree.</h2>
+Operating data lives in RealPage and reaches other tools in daily batches and Excel workbooks. Each system calculates the same measure its own way, at its own moment, so owners and teams see different numbers, and answering one question means visiting several places.
+<div class="k">THE IDEA</div>A shared layer of agreed measures, each with its definition, timing and source. Every report, team and AI answer reads from it and shows its work. Nothing gets replaced.</aside></div>
+<div class="legend"><span><i style="background:#231A17"></i>System</span><span><i style="background:#fff;border:1.5px solid #E75437"></i>Measure (the layer)</span><span><i style="background:#F2ECEA"></i>Team</span><span><i style="background:#3F7D54"></i>Quick win</span><span><i style="background:#E75437"></i>Foundation</span><span><i style="background:#71635C"></i>Next</span><span><i style="background:none;border-top:2px dashed #C2412A;height:0;border-radius:0"></i>Manual or batch hop</span></div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
 <script>
-const W=1200,H=740,CX=600,CY=370;
-const A=[
- ['inv','Investments & acquisitions','Finds opportunities in markets and product classes often passed over by more traditional institutional investors.',[
-   ['Deal screening memo','Summarize an offering, market and comps into a first-pass memo','Offering memo, market data'],
-   ['Due-diligence file','Lease audit exceptions, contract abstracts, open items, cited','Rent roll, leases, contracts',1],
-   ['Comps and market summary','Draft the market section of the due-diligence report','Market and comps data']]],
- ['am','Asset management','Budgeting and forecasting · Performance monitoring · Stakeholder communication',[
-   ['Owner report commentary','Cited draft of every variance explanation, every month','Ledger, rent roll, work orders',1],
-   ['Budget and forecast drafts','First-draft budget narratives and reforecast notes','Ledger, prior budgets'],
-   ['Portfolio watchlist','Weekly note on properties drifting from plan, with reasons','Ledger, occupancy, delinquency']]],
- ['cap','Capital improvements','1-5 year CapEx budget plan · Property condition assessment · Project tracking',[
-   ['Bid comparison','Item-by-item bids vs scope; gaps before award','Scopes, bids',1],
-   ['CapEx plan from inspections','Turn condition assessments into a ranked 1-5 year plan draft','Inspection reports'],
-   ['Project status and closeout','Budget vs actual and closeout packets per project','Invoices, inspections']]],
- ['ops','Property operations','Routine site inspections and reporting · work orders · make-ready',[
-   ['Work-order summaries','Spot repeat issues and cost drivers by property','Work orders'],
-   ['Make-ready coordination','Turn schedule and vendor sequence, blockers flagged','Move-outs, inspections'],
-   ['Inspection reports','Draft site inspection reports from notes and photos','Inspection notes, photos']]],
- ['res','Leasing & residents','Front office already runs conversational AI (leasing, collections, voice, tours)',[
-   ['Renewal prep for staff','Pull each resident\'s history into a renewal brief (no pricing)','Resident ledger, work orders'],
-   ['Resident notices','Draft required notices for a person to review and send','Templates, lease terms'],
-   ['Check on vendor AI','Sample the AI conversations they already run against a checklist','Conversation logs']]],
- ['mkt','Marketing','Integrated digital advertising · Smart SEO · review response · call scoring',[
-   ['Review themes','What residents praise and complain about, by property','Online reviews'],
-   ['Community content','Listing and website copy drafts per community','Property facts, photos'],
-   ['Call-scoring insights','Turn scored calls into coaching notes per site','Call scores, transcripts']]],
- ['acct','Accounting & spend','Spend management (published case study)',[
-   ['Invoice match','Invoice vs contract and PO; flag exceptions','Invoices, contracts, POs'],
-   ['Spend anomaly flags','Unusual vendor spend by property, explained','AP ledger'],
-   ['Close checklist assistant','Track month-end close items and gaps','Close checklist, ledger']]],
- ['comp','Compliance & risk','Market-rate and affordable housing · Risk management',[
-   ['Cited rules layer','Answers on rules across 20 states and DC, quoted with section','Official texts'],
-   ['Affordable file check','Recertification file completeness before audit','Tenant files'],
-   ['AI register and policy','Inventory of AI tools: purpose, data, owner, review','Tool list']]],
- ['ppl','People & learning','GOUniversity · GOGuru · Activated program',[
-   ['Procedures assistant','Answers from GoldOller\'s own procedures, page cited','Procedures'],
-   ['Activated playbooks','Takeover and turnaround checklists for Activated teams','Past assignments'],
-   ['Onboarding guide','New-hire guide drafted from policies and GOUniversity','Policies, training']]]];
-const nodes=[{id:'go',t:'GoldOller',k:'core',x:CX,y:CY}],links=[];
-A.forEach(([id,t,q,ideas],i)=>{const a=-Math.PI/2+i*2*Math.PI/A.length;const hx=CX+Math.cos(a)*215,hy=CY+Math.sin(a)*190;
- nodes.push({id,t,k:'area',q,x:hx,y:hy,a});links.push({s:'go',t:id});
- ideas.forEach(([it,d,data,star],j)=>{const b=a+(j-1)*0.25;const rr=j===1?1:0.9;const x=CX+Math.cos(b)*400*rr,y=CY+Math.sin(b)*305*rr;
-  const iid=id+j;nodes.push({id:iid,t:it,k:'idea',d,data,star,area:t,x,y,a:b});links.push({s:id,t:iid});});});
-const svg=d3.select('#g').append('svg').attr('viewBox',`0 0 ${W} ${H}`);
-const by=Object.fromEntries(nodes.map(n=>[n.id,n]));
-const lk=svg.append('g').selectAll('line').data(links).join('line').attr('stroke','#DDD5D1').attr('stroke-width',1.2);
-const g=svg.append('g').selectAll('g').data(nodes).join('g').attr('class','node');
-g.each(function(n){const s=d3.select(this);
- if(n.k==='core'){s.append('circle').attr('r',40).attr('fill','#E75437');s.append('text').text('GoldOller').attr('text-anchor','middle').attr('dy',5).attr('fill','#fff').attr('font-weight',600).attr('font-size',14);}
- else if(n.k==='area'){const w=n.t.length*7.3+24;s.append('rect').attr('x',-w/2).attr('y',-15).attr('width',w).attr('height',30).attr('rx',15).attr('fill','#231A17');
-   s.append('text').text(n.t).attr('text-anchor','middle').attr('dy',4.5).attr('fill','#fff').attr('font-size',12.5).attr('font-weight',600);}
- else{const right=Math.cos(n.a)>0.02,left=Math.cos(n.a)<-0.02;s.append('circle').attr('r',n.star?9:7).attr('fill','#fff').attr('stroke',n.star?'#E75437':'#71635C').attr('stroke-width',n.star?3:1.5);
-   s.append('text').text(n.t).attr('text-anchor',right?'start':left?'end':'middle').attr('dx',right?13:left?-13:0).attr('dy',(!right&&!left)?(Math.sin(n.a)<0?-14:22):4.5).attr('font-size',12.5).attr('font-weight',n.star?600:400).attr('fill','#231A17');}});
-function pos(){lk.attr('x1',d=>by[d.s].x).attr('y1',d=>by[d.s].y).attr('x2',d=>by[d.t].x).attr('y2',d=>by[d.t].y);g.attr('transform',d=>`translate(${d.x},${d.y})`);}
-pos();
-g.call(d3.drag().on('drag',(e,d)=>{d.x=Math.max(20,Math.min(W-20,e.x));d.y=Math.max(20,Math.min(H-20,e.y));pos();}));
+const W=1200,H=700;
+const SYS=[
+ ['rp','RealPage','System of record for operations: leasing, residents, accounting. Payments and marketing connect through it.','Holds the operating data. The team estimates it can reach about 65% of it (not yet verified).'],
+ ['sym','Symmetry','Asset management.','Fed from RealPage once a day, in a batch, so it always sees yesterday. Calculations and reporting shift with it.'],
+ ['dp','DealPath','System of record for investments and the deal pipeline.','About 300 deals underwritten a year. ApartmentIQ research lands here.'],
+ ['aiq','ApartmentIQ','Market data, target lists and prospect research.','Pulled by hand and stitched with other sources.'],
+ ['mon','Monday.com','CRM for management clients.','About 75% used; being revamped. Contacts added from screenshots of email signatures.'],
+ ['qui','Quiller','Web-based management proposals.','A Claude integration is available but not set up yet.'],
+ ['bank','Banks and cash','About 200 bank accounts across about 80 properties.','Cash position reviewed by hand.'],
+ ['xl','Excel workbooks','The translation layer today.','Complicated, error-prone, slow to update. Turns operating data into investment metrics.']];
+const MEA=[
+ ['m1','Effective rent','Differs by system: concessions and one-offs handled differently.'],
+ ['m2','Lease trade-out','Some systems drop the one-off cases.'],
+ ['m3','Renewals','Counted at application, approval or effective date, depending on the system.'],
+ ['m4','Occupancy and leased','Different moment, different number: live in RealPage, yesterday in Symmetry.'],
+ ['m5','Payroll per unit','Not in the operating data as-is; rebuilt in Excel for investments.'],
+ ['m6','Controllable expenses','Mapped by hand from the operating ledger to investment views.'],
+ ['m7','Cash position','Spread across about 200 accounts.']];
+const TEAM=[
+ ['inv','Investments','Underwriting, pipeline, investor materials, underwritten vs actual.','Make reporting easier and faster, not "more accurate". Judgment stays with people.'],
+ ['pms','PM services and third-party','Prospecting and onboarding new management clients; proposals; CRM.','Front-end research is the biggest time sink.'],
+ ['acct','Accounting and treasury','Cash, reconciliation, reporting.','New to Claude in the last month; already seeing value.'],
+ ['am','Asset management and owners','Owner reporting and performance.','Owner partners see different numbers in different places.']];
+const OPP=[
+ ['o1','Systems and measures map','f','all','Map every system, the 8–12 measures that matter, how each system calculates them and when it updates. Verify the 65% access gap. Reconcile one month for five properties.','About 3 weeks','Foundation for everything else'],
+ ['o2','Ops to investment metrics','f','inv','Agreed definitions for payroll per unit, controllable expenses and the rest, then comparison views across markets (for example Jacksonville vs Atlanta by size).','4–6 weeks after the map','Hours of Excel upkeep removed'],
+ ['o3','Owner numbers that agree','f','am','One set of numbers per owner, each labeled with its source and as-of time; differences explained automatically.','After the map','Fewer owner questions; time to explain a gap'],
+ ['o4','Ask the portfolio','n','am','Ask a question once and get the answer with its source and date, instead of visiting several systems. Read-only, on the layer.','Pilot on 20 real questions','Minutes per answer'],
+ ['o5','Quiller + Claude proposals','q','pms','Turn on the existing Claude integration for management proposals.','Days','Time per proposal'],
+ ['o6','Onboarding notifications','q','pms','Monday.com workflows that alert the right people when a property is onboarded.','About a week','Missed hand-offs'],
+ ['o7','Contact capture','q','pms','Email signatures to clean Monday.com contacts, with a person confirming.','About a week','Time per contact'],
+ ['o8','Ranked prospect lists','n','pms','ApartmentIQ and other sources stitched into a ranked target list loaded into Monday.com.','3–4 weeks','Research hours per target'],
+ ['o9','Cash forecast exceptions','n','acct','Rolling forecast and alerts on the accounts that need funding or attention, instead of reviewing all 200.','Prototype in 3–4 weeks','Accounts reviewed by exception'],
+ ['o10','Investor materials, faster','q','inv','Claude drafts investor materials from finished analysis, as today, but fed from the agreed metrics.','Ongoing','Time per pack']];
+const col={q:'#3F7D54',f:'#E75437',n:'#71635C'},lab={q:'Quick win',f:'Foundation',n:'Next'};
+const N=[];const X={sys:160,mea:465,team:785,opp:1072};
+SYS.forEach((s,i)=>N.push({id:s[0],t:s[1],k:'sys',d:s[2],said:s[3],x:X.sys,y:52+i*81}));
+MEA.forEach((m,i)=>N.push({id:m[0],t:m[1],k:'mea',d:m[2],x:X.mea,y:150+i*64}));
+TEAM.forEach((t,i)=>N.push({id:t[0],t:t[1],k:'team',d:t[2],said:t[3],x:X.team,y:115+i*150}));
+OPP.forEach((o,i)=>N.push({id:o[0],t:o[1],k:'opp',s:o[2],team:o[3],d:o[4],when:o[5],m:o[6],x:X.opp,y:40+i*66}));
+const by=Object.fromEntries(N.map(n=>[n.id,n]));
+const today=[['rp','sym','b'],['aiq','dp','m'],['rp','xl','m'],['xl','inv','m'],['sym','am','x'],['rp','am','x'],['dp','inv','x'],['aiq','mon','m'],['mon','pms','x'],['qui','pms','x'],['bank','acct','m'],['rp','acct','x'],['xl','am','m']];
+const layer=[['rp','m1'],['rp','m2'],['rp','m3'],['rp','m4'],['rp','m5'],['rp','m6'],['sym','m4'],['sym','m6'],['dp','m5'],['dp','m6'],['bank','m7'],
+ ['m1','am'],['m2','am'],['m2','inv'],['m3','am'],['m4','am'],['m4','inv'],['m5','inv'],['m6','inv'],['m7','acct'],['aiq','pms'],['mon','pms'],['qui','pms']];
+const oppL=OPP.map(o=>o[3]==='all'?null:[o[3],o[0]]).filter(Boolean);
+const svg=d3.select('#g').append('svg').attr('viewBox',`0 0 ${W} ${H}`).attr('role','img').attr('aria-label','GoldOller systems, measures, teams and opportunities');
+const heads=[['YOUR SYSTEMS',X.sys],['THE LAYER: AGREED MEASURES',X.mea],['TEAMS',X.team],['OPPORTUNITIES',X.opp]];
+svg.append('g').selectAll('text').data(heads).join('text').attr('x',d=>d[1]).attr('y',18).attr('text-anchor','middle').attr('font-size',11).attr('letter-spacing','.12em').attr('font-weight',600).attr('fill','#71635C').text(d=>d[0]);
+const band=svg.append('rect').attr('x',X.mea-120).attr('y',112).attr('width',240).attr('height',470).attr('rx',14).attr('fill','#FCE9E4').attr('opacity',0);
+const LG=svg.append('g');
+function curve(a,b){if(a.k==='sys'&&b.k==='sys'){const x=a.x-78,bend=x-46-Math.min(40,Math.abs(b.y-a.y)/8);return `M${x},${a.y}C${bend},${a.y} ${bend},${b.y} ${x},${b.y}`;}const x1=a.x+(a.k==='sys'?78:a.k==='mea'?100:a.k==='team'?110:0),x2=b.x-(b.k==='mea'?100:b.k==='team'?110:b.k==='opp'?118:78);const mx=(x1+x2)/2;return `M${x1},${a.y}C${mx},${a.y} ${mx},${b.y} ${x2},${b.y}`;}
+function draw(mode){
+ const L=(mode==='t'?today.map(([a,b,t])=>({a,b,t})):layer.map(([a,b])=>({a,b,t:'l'}))).concat(oppL.map(([a,b])=>({a,b,t:'o'})));
+ LG.selectAll('path').data(L,d=>d.a+d.b+d.t).join(en=>en.append('path').attr('fill','none').attr('opacity',0).call(e=>e.transition().duration(350).attr('opacity',1)),up=>up,ex=>ex.transition().duration(200).attr('opacity',0).remove())
+  .attr('d',d=>curve(by[d.a],by[d.b])).attr('stroke',d=>d.t==='m'||d.t==='b'?'#C2412A':d.t==='l'?'#E75437':'#CFC6C2')
+  .attr('stroke-width',d=>d.t==='l'?1.6:1.3).attr('stroke-dasharray',d=>d.t==='m'||d.t==='b'?'5 4':null).attr('opacity',d=>d.t==='o'?.7:1);
+ band.transition().duration(350).attr('opacity',mode==='l'?1:0);
+ G.filter(n=>n.k==='mea').transition().duration(350).style('opacity',mode==='l'?1:.28);
+ G.filter(n=>n.id==='xl').transition().duration(350).style('opacity',mode==='l'?.28:1);
+ d3.select('#bt').classed('on',mode==='t');d3.select('#bl').classed('on',mode==='l');cur=mode;}
+let cur='t';
+const G=svg.append('g').selectAll('g').data(N).join('g').attr('class','node').attr('tabindex',0).attr('transform',n=>`translate(${n.x},${n.y})`);
+G.each(function(n){const s=d3.select(this);
+ if(n.k==='sys'){s.append('rect').attr('x',-78).attr('y',-22).attr('width',156).attr('height',44).attr('rx',8).attr('fill',n.id==='xl'?'#fff':'#231A17').attr('stroke',n.id==='xl'?'#C2412A':'none').attr('stroke-dasharray',n.id==='xl'?'5 4':null);
+   s.append('text').text(n.t).attr('text-anchor','middle').attr('dy',5).attr('fill',n.id==='xl'?'#C2412A':'#fff').attr('font-size',13.5).attr('font-weight',600);}
+ if(n.k==='mea'){s.append('rect').attr('x',-100).attr('y',-20).attr('width',200).attr('height',40).attr('rx',20).attr('fill','#fff').attr('stroke','#E75437').attr('stroke-width',1.6);
+   s.append('text').text(n.t).attr('text-anchor','middle').attr('dy',5).attr('font-size',13).attr('font-weight',600).attr('fill','#231A17');}
+ if(n.k==='team'){s.append('rect').attr('x',-110).attr('y',-26).attr('width',220).attr('height',52).attr('rx',10).attr('fill','#F2ECEA');
+   s.append('text').text(n.t).attr('text-anchor','middle').attr('dy',5).attr('font-size',13.5).attr('font-weight',600).attr('fill','#231A17');}
+ if(n.k==='opp'){s.append('rect').attr('x',-118).attr('y',-21).attr('width',236).attr('height',42).attr('rx',8).attr('fill','#fff').attr('stroke','#E5DDD9');
+   s.append('rect').attr('x',-118).attr('y',-21).attr('width',8).attr('height',42).attr('rx',3).attr('fill',col[n.s]);
+   s.append('text').text(n.t).attr('x',-102).attr('dy',-2).attr('font-size',12.5).attr('font-weight',600).attr('fill','#231A17');
+   s.append('text').text(lab[n.s]+' · '+n.when).attr('x',-102).attr('dy',13).attr('font-size',10.5).attr('fill','#71635C');}});
 const p=document.getElementById('p');
-function focus(ids){g.style('opacity',n=>ids.has(n.id)||n.k==='core'?1:.25);lk.style('opacity',d=>ids.has(d.t)?1:.2);}
-g.on('click',(e,n)=>{ if(n.k==='area'){const ids=new Set([n.id,...links.filter(l=>l.s===n.id).map(l=>l.t)]);focus(ids);
-   p.innerHTML=`<div class="k">PART OF THE BUSINESS</div><h2>${n.t}</h2><q>“${n.q}”</q><div class="k">IDEAS HERE</div>${links.filter(l=>l.s===n.id).map(l=>'• '+by[l.t].t).join('<br>')}`;}
- else if(n.k==='idea'){const ar=links.find(l=>l.t===n.id).s;focus(new Set([n.id,ar]));
-   p.innerHTML=`<div class="k">${n.area.toUpperCase()}${n.star?' · SUGGESTED START':''}</div><h2>${n.t}</h2>${n.d}.<div class="k">DATA IT NEEDS</div>${n.data}<div class="k">HOW IT WORKS</div>The agent drafts, a named person signs, proven on past work first.`;}
- else {g.style('opacity',1);lk.style('opacity',1);} });
-if(new URLSearchParams(location.search).has('static')){document.querySelector('aside').style.display='none';document.querySelector('header').style.display='none';}
+function show(n){let h='';
+ if(n.k==='sys') h=`<div class="k">SYSTEM</div><h2>${n.t}</h2>${n.d}<div class="k">WHAT WE HEARD</div><div class="said">${n.said}</div>`;
+ if(n.k==='mea') h=`<div class="k">MEASURE IN THE LAYER</div><h2>${n.t}</h2><div class="said">${n.d}</div><div class="k">IN THE LAYER</div>One written definition: what it counts, at which moment, from which system, and what's left out. Every report and answer uses it and shows its source.`;
+ if(n.k==='team'){const os=OPP.filter(o=>o[3]===n.id).map(o=>`<span class="pill" style="background:${col[o[2]]}">${o[1]}</span>`).join('');h=`<div class="k">TEAM</div><h2>${n.t}</h2>${n.d}<div class="k">WHAT WE HEARD</div><div class="said">${n.said}</div><div class="k">OPPORTUNITIES</div>${os}`;}
+ if(n.k==='opp') h=`<div class="k">OPPORTUNITY</div><h2>${n.t}</h2><span class="pill" style="background:${col[n.s]}">${lab[n.s]}</span><span class="pill" style="background:#51453F">${n.when}</span><div style="margin-top:8px">${n.d}</div><div class="k">HOW WE'D MEASURE IT</div>${n.m}<div class="k">ALWAYS</div>Read-only first. A named person signs anything that goes out.`;
+ p.innerHTML=h;
+ const rel=new Set([n.id]);LG.selectAll('path').each(d=>{if(d.a===n.id)rel.add(d.b);if(d.b===n.id)rel.add(d.a);});
+ if(n.id==='o1') N.forEach(x=>rel.add(x.id));
+ G.style('opacity',x=>rel.has(x.id)?1:.25);LG.selectAll('path').style('opacity',d=>(d.a===n.id||d.b===n.id)?1:.12);}
+G.on('click',(e,n)=>show(n)).on('keydown',(e,n)=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();show(n);}});
+svg.on('click',e=>{if(e.target.tagName==='svg'){G.style('opacity',null);LG.selectAll('path').style('opacity',null);draw(cur);}});
+document.getElementById('bt').onclick=()=>{G.style('opacity',null);draw('t');};
+document.getElementById('bl').onclick=()=>{G.style('opacity',null);draw('l');};
+draw('t');
+if(new URLSearchParams(location.search).has('layer')) draw('l');
 </script></body></html>
